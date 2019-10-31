@@ -49,7 +49,7 @@ fn main() {
         return;
     }
 
-    info!("Starting verfploeter v{} - Leandro Edition", env!("CARGO_PKG_VERSION"));
+    info!("Starting verfploeter v{} - Leandro Edition v6", env!("CARGO_PKG_VERSION"));
 
     if let Some(prometheus_addr) = matches.value_of("prometheus") {
         let addr = prometheus_addr
@@ -128,7 +128,7 @@ fn read_file_content(path: &str) -> Option<Vec<u8>> {
 fn parse_cmd<'a>() -> ArgMatches<'a> {
     App::new("Verfploeter")
         .version(env!("CARGO_PKG_VERSION"))
-        .author("Wouter B. de Vries <w.b.devries@utwente.nl> ")
+        .author(" Wouter B. de Vries <w.b.devries@utwente.nl>")
         .about("Performs measurements")
         .arg(Arg::with_name("prometheus").short("p").long("prometheus").takes_value(true).required(false).help("Enables prometheus metrics"))
         .subcommand(SubCommand::with_name("server").about("Launches the verfploeter server")
