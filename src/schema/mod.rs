@@ -1,3 +1,5 @@
+#![allow(bare_trait_objects)]
+
 pub mod verfploeter;
 pub mod verfploeter_grpc;
 

@@ -1,3 +1,5 @@
+#![allow(unused_imports)]
+
 extern crate hyper;
 use hyper::rt::Future;
 use hyper::service::service_fn_ok;

@@ -1,3 +1,7 @@
+#![allow(dead_code)]
+#![allow(unused_variables)]
+#![allow(unused_must_use)]
+
 use super::{current_timestamp, ChannelType, TaskHandler};
 use crate::net::ICMP4Packet;
 use crate::schema::verfploeter::{PingPayload, Task, TaskId};
