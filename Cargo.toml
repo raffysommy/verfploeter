@@ -1,7 +1,7 @@
 [package]
 name = "verfploeter"
-version = "0.1.42"
-authors = ["Wouter de Vries wouter@wouter-web.nl>"]
+version = "0.1.43"
+authors = ["Wouter de Vries wouter@wouter-web.nl> Leandro Bertholdo<leandro.bertholdo@gmail.com"]
 edition = "2018"
 
 [dependencies]
