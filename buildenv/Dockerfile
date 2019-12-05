@@ -6,3 +6,5 @@ RUN rustup toolchain install nightly && rustup default nightly
 VOLUME /source
 VOLUME /target
 ENTRYPOINT [ "sh", "-c", "cp -r /source /source_copy && cd /source_copy && cargo build --release --target-dir /target" ]
+#CMD [ "sh", "-c", "cp -r /source /source_copy && cd /source_copy && cargo build --release --target-dir /target" ]
+#CMD ["/bin/bash"]
