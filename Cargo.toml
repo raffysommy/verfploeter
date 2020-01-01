@@ -1,13 +1,15 @@
 [package]
 name = "verfploeter"
-version = "0.1.43"
-authors = ["Wouter de Vries wouter@wouter-web.nl> Leandro Bertholdo<leandro.bertholdo@gmail.com"]
+version = "0.1.42"
+authors = ["Wouter de Vries <wouter@wouter-web.nl>",
+           "Leandro M. Bertholdo<leandro.bertholdo@gmail.com"]
 edition = "2018"
 
 [dependencies]
 grpcio = "~0.4"
 futures = "~0.1"
-protobuf = { version = "~2.0" }
+# protobuf = { version = "~2.0" }
+protobuf = { version = "~2.8" }
 env_logger = "~0.6"
 log = "~0.4"
 clap = "~2"

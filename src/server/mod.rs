@@ -1,6 +1,11 @@
+//!----------------------------------------------------------------------------
+//! # Verfploter Server (mod.rs)
+//!----------------------------------------------------------------------------
+//! Treat command line and start VerfPloeter server/client or CLI
+//!  
+//!----------------------------------------------------------------------------
+
 #![allow(unused_imports)]
-
-
 
 use super::schema::verfploeter::{
     Ack, Client, ClientList, Empty, Metadata, ScheduleTask, Task, TaskId, TaskResult,
@@ -321,6 +326,8 @@ impl Verfploeter for VerfploeterService {
 
 type ConnectionList = Arc<RwLock<HashMap<u32, Connection>>>;
 
+// TODO: L-> How to run server with DEBUG_MESSAGES?
+// TODO: L-> How to activate logger to rsyslog - any already planned?
 #[derive(Debug)]
 struct ConnectionManager {
     connections: ConnectionList,
@@ -378,6 +385,8 @@ impl ConnectionManager {
     }
 }
 
+/// Test functions - can be run with 'cargo test'
+/// Try if server can manager connections IDs (create, register and retrieve )
 #[cfg(test)]
 mod connection_manager {
     use super::*;
@@ -440,3 +449,5 @@ mod connection_manager {
         );
     }
 }
+
+// End-of-mod.rs

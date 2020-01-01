@@ -95,6 +95,8 @@ impl Into<Vec<u8>> for &ICMP4Packet {
 }
 
 impl ICMP4Packet {
+    /// Create a basic ICMPv4 ECHO_REQUEST (8.0) packet with checksum
+    /// Each packet will be created using received SEQUENCE_NUMBER, ID and CONTENT
     pub fn echo_request(identifier: u16, sequence_number: u16, body: Vec<u8>) -> Vec<u8> {
         let mut packet = ICMP4Packet {
             icmp_type: 8,
@@ -119,6 +121,8 @@ impl ICMP4Packet {
         cursor.into_inner()
     }
 
+    /// Calc ICMP Checksum covers the entire ICMPv4 message (16-bit one's complement)
+    /// TODO L-> ICMPv6 it also covers a pseudo-header derived from portions of the IPv6 header.
     fn calc_checksum(buffer: &[u8]) -> u16 {
         let mut cursor = Cursor::new(buffer);
         let mut sum: u32 = 0;

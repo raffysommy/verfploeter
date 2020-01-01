@@ -1,23 +1,3 @@
-//!----------------------------------------------------------------------------
-//! # Verfploter main.rs
-//!----------------------------------------------------------------------------
-//! ```
-//! Treat command line and start VerfPloeter server/client or CLI 
-//!  USAGE:
-//!    verfploeter {OPTIONS}{SUBCOMMAND}
-//! FLAGS:
-//!     -h, --help       Prints help information
-//!     -V, --version    Prints version information
-//! OPTIONS:
-//!     -p, --prometheus <prometheus>    Enables prometheus metrics
-//! SUBCOMMANDS:
-//!     cli       Verfploeter CLI
-//!     client    Launches the verfploeter client
-//!     help      Prints this message or the help of the given subcommand(s)
-//!     server    Launches the verfploeter server
-//! ```
-//!----------------------------------------------------------------------------
-
 #![feature(drain_filter)]
 #[macro_use]
 extern crate log;
@@ -57,10 +37,8 @@ use std::net::SocketAddr;
 use std::thread;
 use std::time::Duration;
 
-/// VerfPloeter:: main() - Treat command line and start VerfPloeter server/client or CLI 
 fn main() {
     // Setup logging
-    // TODO: L-> there is no logs on testbed, just stderr - some issue with verfploeter logger or rsyslog.conf
     let env = env_logger::Env::default().filter_or(env_logger::DEFAULT_FILTER_ENV, "info");
     env_logger::Builder::from_env(env).init();
 
@@ -73,7 +51,6 @@ fn main() {
 
     info!("Starting verfploeter v{} - Leandro Edition v6", env!("CARGO_PKG_VERSION"));
 
-    // TODO: L-> what is expected as prometeus_address:port ??
     if let Some(prometheus_addr) = matches.value_of("prometheus") {
         let addr = prometheus_addr
             .parse::<SocketAddr>()
@@ -83,7 +60,6 @@ fn main() {
         });
     }
 
-    // TODO: L-> just to confirm is unused - what was the idea o this certificates??
     if let Some(server_matches) = matches.subcommand_matches("server") {
         // Read certificate and private key from filesystem
         let mut certificate = None;
@@ -112,10 +88,6 @@ fn main() {
         s.start();
 
         // TODO: come up with a smarter way to keep the program alive
-        // MAYBE SOMETHING LIKE THIS: icmp listener 
-        //     for stream in listener.incoming() {
-        //         let stream = stream.unwrap();
-        //     }
         loop {
             thread::sleep(Duration::from_secs(1));
         }
@@ -145,7 +117,6 @@ fn main() {
     debug!("exiting");
 }
 
-/// Read a client/server certificate file
 fn read_file_content(path: &str) -> Option<Vec<u8>> {
     let mut buffer = Vec::new();
     BufReader::new(File::open(path).expect(&format!("Unable to open file: {}", path)))
@@ -154,12 +125,10 @@ fn read_file_content(path: &str) -> Option<Vec<u8>> {
     Some(buffer)
 }
 
-/// Parse $ verfploter [OPTIONS][SUBCOMANDS}  to start server, client, CLI or help (--help)
 fn parse_cmd<'a>() -> ArgMatches<'a> {
     App::new("Verfploeter")
         .version(env!("CARGO_PKG_VERSION"))
-        //.author(" Wouter B. de Vries <w.b.devries@utwente.nl> and Leandro Bertholdo <l.m.bertholdo@utwente.nl>")
-        .author(env!("CARGO_PKG_AUTHORS"))
+        .author(" Wouter B. de Vries <w.b.devries@utwente.nl>")
         .about("Performs measurements")
         .arg(Arg::with_name("prometheus").short("p").long("prometheus").takes_value(true).required(false).help("Enables prometheus metrics"))
         .subcommand(SubCommand::with_name("server").about("Launches the verfploeter server")
@@ -225,5 +194,3 @@ fn parse_cmd<'a>() -> ArgMatches<'a> {
         )
         .get_matches()
 }
-
-// End-of-main.rs
