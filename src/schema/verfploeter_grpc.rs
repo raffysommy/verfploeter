@@ -3,7 +3,7 @@
 
 // https://github.com/Manishearth/rust-clippy/issues/702
 #![allow(unknown_lints)]
-#![allow(clippy::all)]
+#![allow(clippy)]
 
 #![cfg_attr(rustfmt, rustfmt_skip)]
 
@@ -60,7 +60,6 @@ const METHOD_VERFPLOETER_TASK_FINISHED: ::grpcio::Method<super::verfploeter::Tas
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
-#[derive(Clone)]
 pub struct VerfploeterClient {
     client: ::grpcio::Client,
 }

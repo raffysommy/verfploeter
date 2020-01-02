@@ -7,7 +7,7 @@ use futures::Stream;
 use grpcio::{ChannelBuilder, Environment};
 use prettytable::{color, format, Attr, Cell, Row, Table};
 use protobuf::RepeatedField;
-use std::error::Error;
+// use std::error::Error;
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
@@ -114,7 +114,7 @@ fn perform_verfploeter_measurement(
                 error_message = Some(ack.get_error_message().to_string());
             }
         }
-        Err(e) => error!("unable to connect: {} ({})", e.description(), e),
+        Err(e) => error!("unable to connect: ({})", e),
     }
     if success {
         let mut transform_pipeline = TransformPipeline { pipeline: vec![] };
