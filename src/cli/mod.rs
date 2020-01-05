@@ -19,6 +19,7 @@ mod enrichment;
 use crate::cli::enrichment::{
     Columnizable, IP2ASNTransformer, IP2CountryTransformer, TransformPipeline, Transformer,
 };
+//use protobuf::descriptor::FieldOptions_CType::STRING;
 
 pub fn execute(args: &ArgMatches) {
     let server = args.value_of("server").unwrap();
@@ -76,7 +77,12 @@ fn perform_verfploeter_measurement(
     let source_ip: u32 =
         u32::from(Ipv4Addr::from_str(matches.value_of("SOURCE_IP").unwrap()).unwrap());
     let ip_file = matches.value_of("IP_FILE").unwrap();
-    // Read IP Addresses from given file
+    debug!("client_hostname:{} source_ip:{} ip_file:{}",
+           client_hostname,
+           Ipv4Addr::from(source_ip),
+           ip_file);
+
+    // Read IP Addresses (vector) from given file
     let file = File::open(ip_file).unwrap_or_else(|_| panic!("Unable to open file {}", ip_file));
     let buf_reader = BufReader::new(file);
     let ips = buf_reader
@@ -87,6 +93,9 @@ fn perform_verfploeter_measurement(
             address
         })
         .collect::<Vec<Address>>();
+
+    debug!("Loaded [{}] IPAddresses on _ips vector",ips.len());
+
     // Construct appropriate structs
     let mut ping = Ping::new();
     let mut address = Address::new();
@@ -104,7 +113,9 @@ fn perform_verfploeter_measurement(
     let mut scheduled_task_id = None;
     let mut error_message = None;
     let mut success = false;
+
     // Send task to server
+    debug!("Sending GRPC_CLIENT.DO_TASK to server-->IN client{:?} DO set_ping", schedule_task);
     match grpc_client.do_task(&schedule_task) {
         Ok(ack) => {
             info!("successfully connected, id: {}", ack.get_task_id());

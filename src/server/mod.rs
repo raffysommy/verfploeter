@@ -326,8 +326,6 @@ impl Verfploeter for VerfploeterService {
 
 type ConnectionList = Arc<RwLock<HashMap<u32, Connection>>>;
 
-// TODO: L-> How to run server with DEBUG_MESSAGES?
-// TODO: L-> How to activate logger to rsyslog - any already planned?
 #[derive(Debug)]
 struct ConnectionManager {
     connections: ConnectionList,

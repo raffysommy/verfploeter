@@ -64,6 +64,8 @@ fn main() {
     let env = env_logger::Env::default().filter_or(env_logger::DEFAULT_FILTER_ENV, "info");
     env_logger::Builder::from_env(env).init();
 
+    debug!("comecou a bagaca!");
+
     let matches = parse_cmd();
 
     if let Some(cli_matches) = matches.subcommand_matches("cli") {
@@ -75,6 +77,7 @@ fn main() {
 
     // TODO: L-> what is expected as prometeus_address:port ??
     if let Some(prometheus_addr) = matches.value_of("prometheus") {
+        debug!("Starting Prometheus...");
         let addr = prometheus_addr
             .parse::<SocketAddr>()
             .expect("Missing valid address for prometheus (ip:port)");
@@ -85,6 +88,7 @@ fn main() {
 
     // TODO: L-> just to confirm is unused - what was the idea o this certificates??
     if let Some(server_matches) = matches.subcommand_matches("server") {
+        debug!("Selected SERVER_MODE!");
         // Read certificate and private key from filesystem
         let mut certificate = None;
         let mut private_key = None;
@@ -117,9 +121,11 @@ fn main() {
         //         let stream = stream.unwrap();
         //     }
         loop {
+            debug!("Going into my eternal loop - until implement a better option");
             thread::sleep(Duration::from_secs(1));
         }
     } else if let Some(client_matches) = matches.subcommand_matches("client") {
+        debug!("Selected CLIENT_MODE!");
         // Read certificate
         let mut certificate = None;
         if let Some(certificate_path) = client_matches.value_of("certificate") {
