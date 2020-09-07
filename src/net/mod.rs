@@ -3,6 +3,8 @@ use std::io::Cursor;
 use std::io::Write;
 use std::net::Ipv4Addr;
 
+const INFO_URL: &str = "http://TODO.tld";
+
 #[derive(Debug)]
 pub struct IPv4Packet {
     pub ttl: u8,
@@ -58,6 +60,7 @@ pub struct ICMP4Packet {
     pub checksum: u16,
     pub identifier: u16,
     pub sequence_number: u16,
+    pub info_url: &'static str,
     pub body: Vec<u8>,
 }
 
@@ -70,6 +73,7 @@ impl From<&[u8]> for ICMP4Packet {
             checksum: data.read_u16::<NetworkEndian>().unwrap(),
             identifier: data.read_u16::<NetworkEndian>().unwrap(),
             sequence_number: data.read_u16::<NetworkEndian>().unwrap(),
+            info_url: INFO_URL,
             body: data.into_inner()[8..].to_vec(),
         }
     }
@@ -88,6 +92,8 @@ impl Into<Vec<u8>> for &ICMP4Packet {
             .expect("Unable to write to byte buffer for ICMP packet");
         wtr.write_u16::<NetworkEndian>(self.sequence_number)
             .expect("Unable to write to byte buffer for ICMP packet");
+        wtr.write_all(&self.info_url.as_bytes())
+            .expect("Unable ot write info_url in ICMP packet");
         wtr.write_all(&self.body)
             .expect("Unable to write to byte buffer for ICMP packet");
         wtr
@@ -104,6 +110,7 @@ impl ICMP4Packet {
             checksum: 0,
             identifier,
             sequence_number,
+            info_url: INFO_URL,
             body,
         };
 
