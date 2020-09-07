@@ -3,7 +3,7 @@ use std::io::Cursor;
 use std::io::Write;
 use std::net::Ipv4Addr;
 
-const INFO_URL: &str = "http://TODO.tld";
+const INFO_URL: &str = "edu.nl/9qt8h";
 
 #[derive(Debug)]
 pub struct IPv4Packet {
