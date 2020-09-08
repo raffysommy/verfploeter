@@ -95,13 +95,20 @@ impl TaskHandler for PingInbound {
                     let mut ping_payload = None;
                     if let PacketPayload::ICMPv4 { value } = packet.payload {
                         // Todo: make the secret configurable
-                        let payload = PingPayload::from_signed_bytes("test-secret", &value.body);
-                        if let Ok(payload) = payload {
-                            ping_payload = Some(payload);
-                        }
+                        if value.body.len() >= 60 {
+				let payload =
+                        	    PingPayload::from_signed_bytes("test-secret", &value.body[0..60]);
+                        	if let Ok(payload) = payload {
+                           		 ping_payload = Some(payload);
+                       	        } else {
+                        	    warn!("invalid payload from {}", packet.source_address);
+                        	}
+			}
+                    } else {
+                                warn!("invalid payload from {}", packet.source_address);
                     }
 
-                    // Don't do anything if we don't have a proper payload
+		    // Don't do anything if we don't have a proper payload
                     if ping_payload.is_none() {
                         PACKETS_PROCESSED_INVALID.inc();
                         return futures::future::ok(());

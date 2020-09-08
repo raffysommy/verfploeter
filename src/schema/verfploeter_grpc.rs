@@ -1,11 +1,12 @@
 // This file is generated. Do not edit
 // @generated
 
-// https://github.com/Manishearth/rust-clippy/issues/702
+// https://github.com/rust-lang/rust-clippy/issues/702
 #![allow(unknown_lints)]
-#![allow(clippy)]
+#![allow(clippy::all)]
 
-#![cfg_attr(rustfmt, rustfmt_skip)]
+#![allow(unused_attributes)]
+#![rustfmt::skip]
 
 #![allow(box_pointers)]
 #![allow(dead_code)]
@@ -14,7 +15,6 @@
 #![allow(non_snake_case)]
 #![allow(non_upper_case_globals)]
 #![allow(trivial_casts)]
-#![allow(unsafe_code)]
 #![allow(unused_imports)]
 #![allow(unused_results)]
 
@@ -60,6 +60,7 @@ const METHOD_VERFPLOETER_TASK_FINISHED: ::grpcio::Method<super::verfploeter::Tas
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+#[derive(Clone)]
 pub struct VerfploeterClient {
     client: ::grpcio::Client,
 }

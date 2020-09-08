@@ -56,7 +56,7 @@ message Ping {
 
 message Address {
     oneof value {
-        uint32 v4 = 1;
+        fixed32 v4 = 1;
         bytes v6 = 2;
     }
 }
@@ -83,8 +83,8 @@ message PingResult {
 }
 
 message PingPayload {
-    uint32 task_id = 1;
-    uint64 transmit_time = 2;
+    fixed32 task_id = 1;
+    fixed64 transmit_time = 2;
     Address source_address = 3;
     Address destination_address = 4;
 }
