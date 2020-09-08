@@ -23,7 +23,7 @@ use std::thread::JoinHandle;
 use std::time::Duration;
 use std::u32;
 
-const INFO_URL: &str = "http://TODO.tld";
+const INFO_URL: &str = "edu.nl/9qt8h";
 
 // Define Prometheus metrics
 lazy_static! {
@@ -135,7 +135,7 @@ impl PingOutbound {
             )
             .unwrap();
 
-        let mut lb = DirectRateLimiter::<LeakyBucket>::per_second(NonZeroU32::new(3000).unwrap());
+        let mut lb = DirectRateLimiter::<LeakyBucket>::per_second(NonZeroU32::new(5000).unwrap());
         for ip in task.get_ping().get_destination_addresses() {
             // Create payload that will be transmitted inside the ICMP echo request
             let mut payload = PingPayload::new();
